@@ -1,4 +1,4 @@
-mport os
+import os
 import telebot
 import time
 import threading
