@@ -18,31 +18,23 @@ logger = logging.getLogger(__name__)
 # ============= ОБРАБОТЧИКИ =============
 @bot.message_handler(commands=['start'])
 def start_command(message):
-    if message.chat.type != 'private':
-        return
-    
     logger.info(f"🔥 ПОЛУЧЕН /start от {message.from_user.id}")
     
-    # ПОЛЬЗОВАТЕЛЮ
+    # ПРОСТОЙ ТЕСТ - отправляем только пользователю
     bot.send_message(
         message.chat.id,
-        "Привет, пришли куки человека которого хотите взломать, мы его рефрешнем и передадим вам🍪\n"
-        "❗️НЕ НУЖНО КИДАТЬ НИК ЖЕРТВЫ, ПОСМОТРИТЕ ДОСТАТОЧНО ВИДЕО ТУТОРИАЛ НА НАШЕМ КАНАЛЕ - @s1iuy❗️"
+        "✅ ТЕСТ: Бот получил ваш /start!"
     )
     
-    # В ГРУППУ
+    # Пытаемся отправить в группу (логируем ошибку если будет)
     try:
-        username = f"@{message.from_user.username}" if message.from_user.username else "без юзернейма"
         bot.send_message(
             GROUP_ID,
-            f"👤 Кто-то нажал /start\n"
-            f"ID: {message.from_user.id}\n"
-            f"Имя: {message.from_user.first_name}\n"
-            f"Юзернейм: {username}"
+            f"👤 Тестовый /start от {message.from_user.id}"
         )
         logger.info(f"✅ Отправлено в группу {GROUP_ID}")
     except Exception as e:
-        logger.error(f"❌ Ошибка группы: {e}")
+        logger.error(f"❌ Ошибка отправки в группу: {e}")
 
 @bot.message_handler(func=lambda message: True)
 def handle_all_messages(message):
