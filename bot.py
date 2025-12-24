@@ -2,6 +2,7 @@ import os
 import telebot
 from flask import Flask, request, jsonify
 import logging
+import time
 
 # ============= НАСТРОЙКА =============
 # Получаем переменные окружения (их нужно установить в Render!)
