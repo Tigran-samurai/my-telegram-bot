@@ -92,7 +92,20 @@ def index():
     }), 200
 
 @app.route('/webhook', methods=['POST'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
+    """Принимаем обновления от Telegram"""
+    if request.headers.get('content-type') == 'application/json':
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        
+        # ОБРАБАТЫВАЕМ В ОТДЕЛЬНОМ ПОТОКЕ, чтобы Telegram получил быстрый ответ
+        import threading
+        thread = threading.Thread(target=bot.process_new_updates, args=([update],))
+        thread.start()
+        
+        return 'OK', 200
+    return 'Bad Request', 400
     """Принимаем обновления от Telegram"""
     if request.headers.get('content-type') == 'application/json':
         json_string = request.get_data().decode('utf-8')
