@@ -1,11 +1,5 @@
 import os
 import os
-print("=== DEBUG: Checking environment variables ===")
-print("TELEGRAM_BOT_TOKEN exists?", "TELEGRAM_BOT_TOKEN" in os.environ)
-token_value = os.environ.get('TELEGRAM_BOT_TOKEN')
-print("TOKEN value:", repr(token_value))
-print("TOKEN length:", len(token_value) if token_value else 0)
-print("============================================")
 import telebot
 import time
 import threading
